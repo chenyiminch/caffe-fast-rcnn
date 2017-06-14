@@ -16,10 +16,10 @@ __global__ void BoxTransformForward(const int nthreads, const Dtype* bottom_thet
 		bottom_theta_data += index * 4;
 		bottom_coordinate_data += index * 4;
 		top_data[index * 4] = bottom_theta_data[0] * bottom_coordinate_data[0] + bottom_theta_data[2];
-		top_data[index * 4 + 1] = bottom_theta_data[1] * bottom_coordinate_data[1] + bottom_coordinate_data[3];
+		top_data[index * 4 + 1] = bottom_theta_data[1] * bottom_coordinate_data[1] + bottom_theta_data[3];
 
 		top_data[index * 4 + 2] = bottom_theta_data[0] * bottom_coordinate_data[2] + bottom_theta_data[2];
-		top_data[index * 4 + 3] = bottom_theta_data[1] * bottom_coordinate_data[3] + bottom_coordinate_data[3];
+		top_data[index * 4 + 3] = bottom_theta_data[1] * bottom_coordinate_data[3] + bottom_theta_data[3];
 	}
 }
 

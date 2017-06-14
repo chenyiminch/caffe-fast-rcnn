@@ -59,44 +59,44 @@ template <typename TypeParam>
 		vector<Blob<Dtype>*> blob_top_vec_;
 	};
 
-	// TYPED_TEST_CASE(BoxSpatialTransformerLayerTest, TestDtypesAndDevices);
-	TYPED_TEST_CASE(BoxSpatialTransformerLayerTest, TestDtypesGPU);
+	TYPED_TEST_CASE(BoxSpatialTransformerLayerTest, TestDtypesAndDevices);
+	// TYPED_TEST_CASE(BoxSpatialTransformerLayerTest, TestDtypesGPU);
 
-	// TYPED_TEST(BoxSpatialTransformerLayerTest, TestForward)
-	// {
-	// 	typedef typename TypeParam::Dtype Dtype;
- //    	LayerParameter layer_param;
+	TYPED_TEST(BoxSpatialTransformerLayerTest, TestForward)
+	{
+		typedef typename TypeParam::Dtype Dtype;
+    	LayerParameter layer_param;
 
- //    	BoxSpatialTransformerLayer<Dtype> layer(layer_param);
- //    	layer.SetUp(this->blob_bottom_vec_, this->blob_top_vec_);
- //    	layer.Forward(this->blob_bottom_vec_, this->blob_top_vec_);
+    	BoxSpatialTransformerLayer<Dtype> layer(layer_param);
+    	layer.SetUp(this->blob_bottom_vec_, this->blob_top_vec_);
+    	layer.Forward(this->blob_bottom_vec_, this->blob_top_vec_);
 
- //    	for (int i = 0; i < 4; ++i)
- //    	{
- //    		Dtype data = this->blob_top_->data_at(0, i, 0, 0);
- //    		LOG(INFO) << data;
- //    		if (i == 0)
- //    		{
- //    			const Dtype kErrorBound = 0.001;
- //    			EXPECT_NEAR(2, data, kErrorBound);
- //    		}
- //    		if (i == 1)
- //    		{
- //    			const Dtype kErrorBound = 0.001;
- //    			EXPECT_NEAR(4, data, kErrorBound);
- //    		}
- //    		if (i == 2)
- //    		{
- //    			const Dtype kErrorBound = 0.001;
- //    			EXPECT_NEAR(2, data, kErrorBound);
- //    		}
- //    		if (i == 3)
- //    		{
- //    			const Dtype kErrorBound = 0.001;
- //    			EXPECT_NEAR(6, data, kErrorBound);
- //    		}
- //    	}
-	// }
+    	for (int i = 0; i < 4; ++i)
+    	{
+    		Dtype data = this->blob_top_->data_at(0, i, 0, 0);
+    		LOG(INFO) << data;
+    		if (i == 0)
+    		{
+    			const Dtype kErrorBound = 0.001;
+    			EXPECT_NEAR(2, data, kErrorBound);
+    		}
+    		if (i == 1)
+    		{
+    			const Dtype kErrorBound = 0.001;
+    			EXPECT_NEAR(6, data, kErrorBound);
+    		}
+    		if (i == 2)
+    		{
+    			const Dtype kErrorBound = 0.001;
+    			EXPECT_NEAR(2, data, kErrorBound);
+    		}
+    		if (i == 3)
+    		{
+    			const Dtype kErrorBound = 0.001;
+    			EXPECT_NEAR(8, data, kErrorBound);
+    		}
+    	}
+	}
 
 	TYPED_TEST(BoxSpatialTransformerLayerTest, TestGradient) {
     typedef typename TypeParam::Dtype Dtype;

@@ -76,21 +76,27 @@ void BoxSpatialTransformerLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& 
 	for (int i = 0; i < batch_size; ++i)
 	{
 		Dtype* coordinates = output_coordinates + i * 4;
-		theta_blob_data[0] = theta_data[i * 4];
-		theta_blob_data[3] = theta_data[i * 4 + 1];
-		theta_blob_data[4] = theta_data[i * 4 + 2];
-		theta_blob_data[5] = theta_data[i * 4 + 3];
+		coordinates[0] = input_coordinates[i*4] * theta_data[i*4] + theta_data[i*4+2];
+		coordinates[1] = input_coordinates[i*4+1] * theta_data[i*4+1] + theta_data[i*4+3];
 
-		for (int j = 0; j < 2; ++j)
-		{
-			for (int k = 0; k < 2; ++k)
-			{
-				coordinate_blob_data[j * 3 + k] = input_coordinates[j * 2 + k];
-			}
-		}
+		coordinates[2] = input_coordinates[i*4+2] * theta_data[i*4] + theta_data[i*4+2];
+		coordinates[3] = input_coordinates[i*4+3] * theta_data[i*4+1] + theta_data[i*4+3];
+		// theta_blob_data[0] = theta_data[i * 4];
+		// theta_blob_data[2] = theta_data[i * 4 + 2];
+		// theta_blob_data[4] = theta_data[i * 4 + 1];
+		// theta_blob_data[5] = theta_data[i * 4 + 3];
 
-		caffe_cpu_gemm<Dtype>(CblasNoTrans, CblasNoTrans, 2, 2, 3, (Dtype)1, 
-			theta_blob_data, coordinate_blob_data, (Dtype)0, coordinates);
+		// for (int j = 0; j < 2; ++j)
+		// {
+		// 	for (int k = 0; k < 2; ++k)
+		// 	{
+		// 		coordinate_blob_data[j * 3 + k] = input_coordinates[k * 2 + j + i * 4];
+		// 	}
+		// }
+
+		// caffe_cpu_gemm<Dtype>(CblasNoTrans, CblasNoTrans, 2, 2, 3, (Dtype)1, 
+		// 	theta_blob_data, coordinate_blob_data, (Dtype)0, coordinates);
+
 	}
 }
 
