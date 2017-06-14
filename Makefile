@@ -456,6 +456,13 @@ runtest: $(TEST_ALL_BIN)
 	$(TOOL_BUILD_DIR)/caffe
 	$(TEST_ALL_BIN) $(TEST_GPUID) --gtest_shuffle $(TEST_FILTER)
 
+TEST_BOXST = .build_release/test/test_box_st_layer.testbin
+
+runtest_box_st: $(TEST_ALL_BIN)
+	$(TOOL_BUILD_DIR)/caffe
+	echo $(TEST_BOXST)
+	$(TEST_BOXST) $(TEST_GPUID) --gtest_shuffle $(TEST_FILTER)
+
 pytest: py
 	cd python; python -m unittest discover -s caffe/test
 
