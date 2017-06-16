@@ -519,6 +519,45 @@ class SPPLayer : public Layer<Dtype> {
   shared_ptr<ConcatLayer<Dtype> > concat_layer_;
 };
 
+// @ymchen, output the coordinates of a box after the spatial transformation
+// 
+template <typename Dtype>
+class BoxSpatialTransformerLayer : public Layer<Dtype>
+{
+public:
+  explicit BoxSpatialTransformerLayer (const LayerParameter& param)
+  : Layer<Dtype>(param) {}
+  virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+  virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+
+  virtual inline const char* type() const { return "BoxSpatialTransformer"; }
+  virtual inline int ExactNumBottomBlobs() const { return 2; }
+  virtual inline int MinTopBlobs() const { return 1; }
+
+protected:
+  virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+  virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+  virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
+  virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
+
+private:
+
+  // int batch_size_;
+  // int channels_;
+  // int height_;
+  // int width_;
+  Blob<Dtype> theta_blob;
+  Blob<Dtype> coordinate_blob;
+  
+};
+
+
 }  // namespace caffe
 
 #endif  // CAFFE_VISION_LAYERS_HPP_
