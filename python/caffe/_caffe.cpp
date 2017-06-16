@@ -238,6 +238,11 @@ BOOST_PYTHON_MODULE(_caffe) {
     .def("_set_input_arrays", &Net_SetInputArrays,
         bp::with_custodian_and_ward<1, 2, bp::with_custodian_and_ward<1, 3> >())
     .def("save", &Net_Save);
+  
+  // Fix for caffe pythonwrapper for boost 1.6
+  boost::python::register_ptr_to_python<boost::shared_ptr<Blob<Dtype> > >();
+  boost::python::register_ptr_to_python<boost::shared_ptr<Net<Dtype> > >();
+  // End fix
 
   bp::class_<Blob<Dtype>, shared_ptr<Blob<Dtype> >, boost::noncopyable>(
     "Blob", bp::no_init)
